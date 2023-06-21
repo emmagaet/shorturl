@@ -1,0 +1,44 @@
+import string
+import random
+
+URL_MAPPING = {}
+
+def shorten_url(url):
+    characters = string.ascii_letters + string.digits
+    short_url = ''.join(random.choice(characters) for _ in range(6))
+    URL_MAPPING[short_url] = url
+    return short_url
+
+def expand_url(short_url):
+    if short_url in URL_MAPPING:
+        return URL_MAPPING[short_url]
+    else:
+        return None
+
+print("URL缩短命令行工具")
+
+while True:
+    print("\n请选择操作：")
+    print("1. 缩短URL")
+    print("2. 还原URL")
+    print("3. 退出程序")
+
+    choice = input("请选择操作（输入数字）：")
+
+    if choice == '3':
+        print("谢谢使用，再见！")
+        break
+
+    if choice == '1':
+        long_url = input("请输入要缩短的URL：")
+        short_url = shorten_url(long_url)
+        print("短URL链接：", short_url)
+    elif choice == '2':
+        short_url = input("请输入要还原的短URL：")
+        long_url = expand_url(short_url)
+        if long_url:
+            print("还原的URL链接：", long_url)
+        else:
+            print("无法找到对应的长URL。")
+    else:
+        print("无效的选择，请重新输入。")
